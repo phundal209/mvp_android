@@ -12,6 +12,8 @@ import com.example.services.IRetrofitProvider;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
+
 /**
  * Created by phundal on 12/1/17.
  */
@@ -39,6 +41,8 @@ public class BasicApplication extends MultiDexApplication {
                 .appModule(new AppModule(this))
                 .build();
         applicationComponent.inject(this);
+
+        Realm.init(this);
     }
 
     public ApplicationComponent getComponent() {
