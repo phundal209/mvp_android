@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BasicApplication</string>
+    <string name="waiting_message">Fetching data...</string>
+</resources>
