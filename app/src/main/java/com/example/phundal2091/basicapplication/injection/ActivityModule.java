@@ -6,6 +6,8 @@ import com.example.phundal2091.basicapplication.injection.annotation.PerActivity
 import com.example.phundal2091.basicapplication.ui.ContentView;
 import com.example.phundal2091.basicapplication.ui.ContentViewPresenter;
 import com.example.phundal2091.basicapplication.ui.IContentViewPresenter;
+import com.example.phundal2091.basicapplication.wrapper.IImageWrapper;
+import com.example.phundal2091.basicapplication.wrapper.ImageWrapper;
 import com.example.services.IApiService;
 
 import dagger.Module;
@@ -34,8 +36,14 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    IContentViewPresenter loginPresenter(IApiService apiService) {
+    IImageWrapper providesImageWrapper() {
+        return new ImageWrapper(activity);
+    }
+
+    @Provides
+    @PerActivity
+    IContentViewPresenter loginPresenter(IApiService apiService, IImageWrapper imageWrapper) {
         return new ContentViewPresenter(activity, new ContentView(activity
-                .findViewById(android.R.id.content)), apiService);
+                .findViewById(android.R.id.content)), apiService, imageWrapper);
     }
 }

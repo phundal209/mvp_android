@@ -3,6 +3,7 @@ package com.example.phundal2091.basicapplication.wrapper;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.example.phundal2091.basicapplication.R;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -23,6 +24,9 @@ public class ImageWrapper implements IImageWrapper {
     public void displayImage(String url, ImageView holder) {
         Picasso.with(context)
                 .load(url)
+                .error(R.mipmap.ic_launcher)
+                .fit()
+                .centerCrop()
                 .into(holder);
     }
 }

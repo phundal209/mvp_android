@@ -1,5 +1,7 @@
 package com.example.services;
 
+import com.example.api.PhotosResponse;
+
 import io.reactivex.Observable;
 
 /**
@@ -7,5 +9,5 @@ import io.reactivex.Observable;
  */
 
 public interface IApiService {
-    Observable<Object> getSomeData();
+    Observable<PhotosResponse> getFlickrPhotos(String query, int page);
 }
