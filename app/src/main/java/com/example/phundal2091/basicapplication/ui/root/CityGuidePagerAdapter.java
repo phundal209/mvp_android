@@ -1,5 +1,6 @@
 package com.example.phundal2091.basicapplication.ui.root;
 
+import android.location.Location;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +15,7 @@ import com.example.phundal2091.basicapplication.ui.cafes.CafeFragment;
 
 public class CityGuidePagerAdapter extends FragmentPagerAdapter {
     private static int PAGE_COUNT = 3;
+    private Location location;
 
 
     public CityGuidePagerAdapter(FragmentManager fm) {
@@ -25,11 +27,15 @@ public class CityGuidePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new BarFragment();
+                BarFragment barFragment = new BarFragment();
+                barFragment.setLocation(location);
+                return barFragment;
             case 1:
-                return new BistroFragment();
+                BistroFragment bistroFragment = new BistroFragment();
+                return bistroFragment;
             case 2:
-                return new CafeFragment();
+                CafeFragment cafeFragment = new CafeFragment();
+                return cafeFragment;
             default:
                 return null;
         }
@@ -41,9 +47,7 @@ public class CityGuidePagerAdapter extends FragmentPagerAdapter {
         return PAGE_COUNT;
     }
 
-    // Returns the page title for the top indicator
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return "Page " + position;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

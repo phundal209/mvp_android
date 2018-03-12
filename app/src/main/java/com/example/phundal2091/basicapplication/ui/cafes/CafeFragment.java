@@ -27,7 +27,7 @@ public class CafeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View inflate = inflater.inflate(R.layout.fragment_bistro, container, false);
+        final View inflate = inflater.inflate(R.layout.fragment_cafe, container, false);
 
         MainActivity activity = (MainActivity) getActivity();
         activity.component().inject(this);

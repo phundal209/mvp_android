@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="75dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:id="@+id/city_item_type_image"
+        tools:src="@mipmap/ic_bar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/city_item_type_name"
+        tools:text="Bar Macho"
+        android:layout_toRightOf="@+id/city_item_type_image"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/separator"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/separator_color"/>
+
+</RelativeLayout>
