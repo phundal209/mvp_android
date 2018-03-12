@@ -1,7 +1,7 @@
 package com.example.phundal2091.basicapplication.injection;
 
 
-import com.example.phundal2091.basicapplication.ui.MainActivity;
+import com.example.phundal2091.basicapplication.ui.root.MainActivity;
 import com.example.phundal2091.basicapplication.injection.annotation.PerActivity;
 
 import dagger.Component;

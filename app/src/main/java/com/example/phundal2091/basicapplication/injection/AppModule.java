@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.services.IRetrofitProvider;
-import com.example.services.RetrofitProvider;
 
 import javax.inject.Singleton;
 
@@ -36,12 +34,6 @@ public class AppModule {
     @Singleton
     Context provideApplicationContext() {
         return application;
-    }
-
-    @Provides
-    @Singleton
-    IRetrofitProvider providesRetrofitProvider() {
-        return new RetrofitProvider();
     }
 
     @Provides

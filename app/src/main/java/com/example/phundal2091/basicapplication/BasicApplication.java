@@ -8,11 +8,8 @@ import android.support.multidex.MultiDexApplication;
 import com.example.phundal2091.basicapplication.injection.AppModule;
 import com.example.phundal2091.basicapplication.injection.ApplicationComponent;
 import com.example.phundal2091.basicapplication.injection.DaggerApplicationComponent;
-import com.example.services.IRetrofitProvider;
 
 import javax.inject.Inject;
-
-import io.realm.Realm;
 
 /**
  * Created by phundal on 12/1/17.
@@ -24,9 +21,6 @@ public class BasicApplication extends MultiDexApplication {
 
     @Inject
     SharedPreferences sharedPreferences;
-
-    @Inject
-    IRetrofitProvider retrofitProvider;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -41,8 +35,6 @@ public class BasicApplication extends MultiDexApplication {
                 .appModule(new AppModule(this))
                 .build();
         applicationComponent.inject(this);
-
-        Realm.init(this);
     }
 
     public ApplicationComponent getComponent() {

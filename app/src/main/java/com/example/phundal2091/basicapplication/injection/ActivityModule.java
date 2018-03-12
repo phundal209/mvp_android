@@ -3,17 +3,13 @@ package com.example.phundal2091.basicapplication.injection;
 import android.app.Activity;
 
 import com.example.phundal2091.basicapplication.injection.annotation.PerActivity;
-import com.example.phundal2091.basicapplication.ui.ContentView;
-import com.example.phundal2091.basicapplication.ui.ContentViewPresenter;
-import com.example.phundal2091.basicapplication.ui.IContentViewPresenter;
-import com.example.services.IApiService;
+import com.example.phundal2091.basicapplication.ui.root.ContentView;
+import com.example.phundal2091.basicapplication.ui.root.ContentViewPresenter;
+import com.example.phundal2091.basicapplication.ui.root.IContentViewPresenter;
 
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by phundal on 12/1/17.
- */
 
 @Module
 public class ActivityModule {
@@ -34,8 +30,8 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    IContentViewPresenter loginPresenter(IApiService apiService) {
+    IContentViewPresenter loginPresenter() {
         return new ContentViewPresenter(activity, new ContentView(activity
-                .findViewById(android.R.id.content)), apiService);
+                .findViewById(android.R.id.content)));
     }
 }
