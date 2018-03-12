@@ -4,6 +4,9 @@ package com.example.phundal2091.basicapplication.injection;
 import android.app.Application;
 
 import com.example.phundal2091.basicapplication.BasicApplication;
+import com.example.phundal2091.basicapplication.ui.bars.BarFragment;
+import com.example.phundal2091.basicapplication.ui.bistros.BistroFragment;
+import com.example.phundal2091.basicapplication.ui.cafes.CafeFragment;
 
 import javax.inject.Singleton;
 

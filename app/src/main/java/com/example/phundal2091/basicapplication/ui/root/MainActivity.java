@@ -2,6 +2,8 @@ package com.example.phundal2091.basicapplication.ui.root;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.example.phundal2091.basicapplication.BasicApplication;
 import com.example.phundal2091.basicapplication.R;
@@ -15,17 +17,15 @@ import javax.inject.Inject;
 
 public class MainActivity extends FragmentActivity {
 
-    protected GeoDataClient mGeoDataClient;
     private MainActivityComponent component;
     @Inject
     IContentViewPresenter contentViewPresenter;
 
-    MainActivityComponent component() {
+    public MainActivityComponent component() {
         if (component == null) {
             component = DaggerMainActivityComponent.builder()
                     .applicationComponent((getBasicApplication()).getComponent())
                     .activityModule(new ActivityModule(this))
-                    .dataModule(new DataModule(this))
                     .build();
         }
         return component;
@@ -41,7 +41,14 @@ public class MainActivity extends FragmentActivity {
         contentViewPresenter
                 .getView()
                 .withRootView(this.findViewById(android.R.id.content).getRootView());
+        bindViewPager();
         contentViewPresenter.bindControls();
+    }
+
+    private void bindViewPager() {
+        CityGuidePagerAdapter cityGuidePagerAdapter = new CityGuidePagerAdapter(getSupportFragmentManager());
+        final ViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager.setAdapter(cityGuidePagerAdapter);
     }
 
     private BasicApplication getBasicApplication() {

@@ -13,6 +13,7 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
 
     protected GeoDataClient mGeoDataClient;
 
+
     public ContentViewPresenter(Context context, ContentView view) {
         super(context, view, false);
     }
@@ -21,6 +22,8 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
     public void bindControls() {
 
     }
+
+
 
     @Override
     public void hide() {
