@@ -11,7 +11,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.phundal2091.basicapplication.NearbyPlaceFinder;
 import com.example.phundal2091.basicapplication.framework.Presenter;
+import com.example.phundal2091.basicapplication.ui.PlaceType;
+import com.example.phundal2091.basicapplication.ui.root.CityGuideAdapter;
 import com.example.services.IApiService;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
@@ -20,6 +23,7 @@ import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 
 
@@ -33,28 +37,37 @@ public class BarsPresenter extends Presenter<BarsView, Object> implements IBarsP
     private PlaceDetectionClient mPlaceDetectionClient;
     private static final String TAG = BarsPresenter.class.getSimpleName();
     private IApiService apiService;
-    private BarRecyclerAdapter barRecyclerAdapter;
+    private CityGuideAdapter cityGuideAdapter;
     private RecyclerView recyclerView;
+    private NearbyPlaceFinder nearbyPlaceFinder;
 
     public BarsPresenter(Context context, BarsView view, IApiService apiService) {
         super(context, view, false);
         this.apiService = apiService;
         this.mGeoDataClient = Places.getGeoDataClient(context, null);
         this.mPlaceDetectionClient = Places.getPlaceDetectionClient(context, null);
+        this.nearbyPlaceFinder = new NearbyPlaceFinder();
     }
 
     @Override
     public void bindControls() {
-        getLikelyPlaces();
+        nearbyPlaceFinder.getLikelyPlaces(context, mPlaceDetectionClient, new NearbyPlaceFinder.IOnListOfPlacesRetrieved() {
+            @Override
+            public void showPlaces(List<Place> places) {
+                bindToAdapter(places);
+            }
+        });
+
     }
 
     private void bindToAdapter(List<Place> places) {
-        if (barRecyclerAdapter != null) {
-            barRecyclerAdapter.addAll(places);
+        if (cityGuideAdapter != null) {
+            cityGuideAdapter.addAll(places);
         } else {
-            barRecyclerAdapter = new BarRecyclerAdapter(places, context);
+            cityGuideAdapter = new CityGuideAdapter(places, context);
+            cityGuideAdapter.setTypeOfItem(PlaceType.BAR);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(barRecyclerAdapter);
+            recyclerView.setAdapter(cityGuideAdapter);
         }
     }
 
@@ -66,32 +79,6 @@ public class BarsPresenter extends Presenter<BarsView, Object> implements IBarsP
             }
         }
         return false;
-    }
-
-    private void getLikelyPlaces() {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_TAG);
-            getLikelyPlaces();
-        }
-        Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
-        final List<Place> listOfLikelyPlaces = new ArrayList<>();
-        placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
-            @Override
-            public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
-                PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
-                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    Log.i(TAG, String.format("Place '%s' has rating: %g",
-                            placeLikelihood.getPlace().getName(),
-                            placeLikelihood.getPlace().getRating()));
-                    if (isPlaceABar(placeLikelihood.getPlace())) {
-                        listOfLikelyPlaces.add(placeLikelihood.getPlace());
-                    }
-                }
-                bindToAdapter(listOfLikelyPlaces);
-                likelyPlaces.release();
-            }
-        });
     }
 
     @Override

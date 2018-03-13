@@ -10,18 +10,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.phundal2091.basicapplication.R;
+import com.example.phundal2091.basicapplication.ui.PlaceType;
 import com.google.android.gms.location.places.Place;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.ViewHolder> {
 
     private List<Place> places;
     private Context context;
+    private PlaceType placeType;
 
     public CityGuideAdapter(List<Place> places, Context context) {
         this.places = places;
@@ -37,8 +35,21 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
     @Override
     public void onBindViewHolder(CityGuideAdapter.ViewHolder holder, int position) {
         Place place = places.get(position);
+        holder.city_item_type_name.setText(place.getName());
         double ratingOfPlace = getValidRating(place);
         flipStarsBasedOnRating(holder, ratingOfPlace);
+
+        switch (placeType) {
+            case BAR:
+                holder.city_item_type_image.setImageResource(R.mipmap.ic_bar);
+                break;
+            case BISTRO:
+                holder.city_item_type_image.setImageResource(R.mipmap.ic_bistro);
+                break;
+            case CAFE:
+                holder.city_item_type_image.setImageResource(R.mipmap.ic_cafe);
+                break;
+        }
     }
 
     @Override
@@ -61,12 +72,22 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
         if (rating == 1) {
             holder.star1.setImageResource(R.mipmap.star_pink);
         } else if(rating == 2) {
+            holder.star1.setImageResource(R.mipmap.star_pink);
             holder.star2.setImageResource(R.mipmap.star_pink);
         } else if(rating == 3) {
+            holder.star1.setImageResource(R.mipmap.star_pink);
+            holder.star2.setImageResource(R.mipmap.star_pink);
             holder.star3.setImageResource(R.mipmap.star_pink);
         } else if (rating == 4) {
+            holder.star1.setImageResource(R.mipmap.star_pink);
+            holder.star2.setImageResource(R.mipmap.star_pink);
+            holder.star3.setImageResource(R.mipmap.star_pink);
             holder.star4.setImageResource(R.mipmap.star_pink);
         } else if (rating == 5) {
+            holder.star1.setImageResource(R.mipmap.star_pink);
+            holder.star2.setImageResource(R.mipmap.star_pink);
+            holder.star3.setImageResource(R.mipmap.star_pink);
+            holder.star4.setImageResource(R.mipmap.star_pink);
             holder.star5.setImageResource(R.mipmap.star_pink);
         }
     }
@@ -76,32 +97,28 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public void setTypeOfItem(PlaceType placeType) {
+        this.placeType = placeType;
+    }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView city_item_type_image;
+        public TextView city_item_type_name;
+        public ImageView star1;
+        public ImageView star2;
+        public ImageView star3;
+        public ImageView star4;
+        public ImageView star5;
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            city_item_type_image = itemView.findViewById(R.id.city_item_type_image);
+            city_item_type_name = itemView.findViewById(R.id.city_item_type_name);
+            star1 = itemView.findViewById(R.id.star1);
+            star2 = itemView.findViewById(R.id.star2);
+            star3 = itemView.findViewById(R.id.star3);
+            star4 = itemView.findViewById(R.id.star4);
+            star5 = itemView.findViewById(R.id.star5);
         }
 
-        @BindView(R.id.city_item_type_image)
-        public ImageView city_item_type_image;
-
-        @BindView(R.id.city_item_type_name)
-        public TextView city_item_type_name;
-
-        @BindView(R.id.star1)
-        public ImageView star1;
-
-        @BindView(R.id.star1)
-        public ImageView star2;
-
-        @BindView(R.id.star1)
-        public ImageView star3;
-
-        @BindView(R.id.star1)
-        public ImageView star4;
-
-        @BindView(R.id.star1)
-        public ImageView star5;
     }
 }
