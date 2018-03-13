@@ -71,8 +71,10 @@ public class MainActivity extends FragmentActivity {
 
     private void bindViewPager() {
         cityGuidePagerAdapter = new CityGuidePagerAdapter(getSupportFragmentManager());
-        final ViewPager viewPager = findViewById(R.id.viewPager);
+        final LockableViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager.setSwipeable(false);
         viewPager.setAdapter(cityGuidePagerAdapter);
+        viewPager.setCurrentItem(0);
         changePager();
     }
 

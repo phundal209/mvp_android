@@ -36,8 +36,7 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
     public void onBindViewHolder(CityGuideAdapter.ViewHolder holder, int position) {
         Place place = places.get(position);
         holder.city_item_type_name.setText(place.getName());
-        double ratingOfPlace = getValidRating(place);
-        flipStarsBasedOnRating(holder, ratingOfPlace);
+        flipStarsBasedOnRating(holder, place.getRating());
 
         switch (placeType) {
             case BAR:
@@ -61,40 +60,30 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
         return 0;
     }
 
-    public double getValidRating(Place place) {
-        if (place.getRating() > 0) {
-            return Math.floor(place.getRating());
-        }
-        return 0;
-    }
-
     public void flipStarsBasedOnRating(ViewHolder holder, double rating) {
-        if (rating == 1) {
+        if (rating <= 0) {
+            // do nothing
+        } else if (rating <= 1) {
             holder.star1.setImageResource(R.mipmap.star_pink);
-        } else if(rating == 2) {
+        } else if(rating <= 2) {
             holder.star1.setImageResource(R.mipmap.star_pink);
             holder.star2.setImageResource(R.mipmap.star_pink);
-        } else if(rating == 3) {
+        } else if(rating <= 3) {
             holder.star1.setImageResource(R.mipmap.star_pink);
             holder.star2.setImageResource(R.mipmap.star_pink);
             holder.star3.setImageResource(R.mipmap.star_pink);
-        } else if (rating == 4) {
+        } else if (rating <= 4) {
             holder.star1.setImageResource(R.mipmap.star_pink);
             holder.star2.setImageResource(R.mipmap.star_pink);
             holder.star3.setImageResource(R.mipmap.star_pink);
             holder.star4.setImageResource(R.mipmap.star_pink);
-        } else if (rating == 5) {
+        } else if (rating <= 5) {
             holder.star1.setImageResource(R.mipmap.star_pink);
             holder.star2.setImageResource(R.mipmap.star_pink);
             holder.star3.setImageResource(R.mipmap.star_pink);
             holder.star4.setImageResource(R.mipmap.star_pink);
             holder.star5.setImageResource(R.mipmap.star_pink);
         }
-    }
-
-    public void addAll(List<Place> newPlaces) {
-        places.addAll(newPlaces);
-        notifyDataSetChanged();
     }
 
     public void setTypeOfItem(PlaceType placeType) {

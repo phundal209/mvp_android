@@ -43,14 +43,10 @@ public class CityItemPresenter extends Presenter<CityItemView, Object> implement
         });
     }
     private void bindToAdapter(List<Place> places) {
-        if (cityGuideAdapter != null) {
-            cityGuideAdapter.addAll(places);
-        } else {
-            cityGuideAdapter = new CityGuideAdapter(places, context);
-            cityGuideAdapter.setTypeOfItem(type);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(cityGuideAdapter);
-        }
+        cityGuideAdapter = new CityGuideAdapter(places, context);
+        cityGuideAdapter.setTypeOfItem(type);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(cityGuideAdapter);
     }
 
     @Override

@@ -27,11 +27,11 @@
         android:layout_below="@+id/appbar"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.view.ViewPager
+        <com.example.phundal2091.basicapplication.ui.root.LockableViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </android.support.v4.view.ViewPager>
+        </com.example.phundal2091.basicapplication.ui.root.LockableViewPager>
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
