@@ -16,6 +16,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="75dp" />
+
+        <include layout="@layout/custom_slider"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout

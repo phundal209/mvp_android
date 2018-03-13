@@ -3,4 +3,7 @@
     <string name="waiting_message">Fetching data...</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bar">Bar</string>
+    <string name="bistro">Bistro</string>
+    <string name="cafe">Cafe</string>
 </resources>

@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#DB3288</color>
     <color name="colorAccent">#DB3288</color>
     <color name="separator_color">#DDDDDD</color>
+    <color name="slider_color">#C02F7D</color>
     <color name="white">#FFFFFF</color>
 </resources>
