@@ -17,9 +17,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by phundal on 3/12/18.
- */
 
 public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.ViewHolder> {
 
@@ -40,7 +37,8 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
     @Override
     public void onBindViewHolder(CityGuideAdapter.ViewHolder holder, int position) {
         Place place = places.get(position);
-        holder.city_item_type_name.setText(place.getName());
+        double ratingOfPlace = getValidRating(place);
+        flipStarsBasedOnRating(holder, ratingOfPlace);
     }
 
     @Override
@@ -52,12 +50,33 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
         return 0;
     }
 
+    public double getValidRating(Place place) {
+        if (place.getRating() > 0) {
+            return Math.floor(place.getRating());
+        }
+        return 0;
+    }
+
+    public void flipStarsBasedOnRating(ViewHolder holder, double rating) {
+        if (rating == 1) {
+            holder.star1.setImageResource(R.mipmap.star_pink);
+        } else if(rating == 2) {
+            holder.star2.setImageResource(R.mipmap.star_pink);
+        } else if(rating == 3) {
+            holder.star3.setImageResource(R.mipmap.star_pink);
+        } else if (rating == 4) {
+            holder.star4.setImageResource(R.mipmap.star_pink);
+        } else if (rating == 5) {
+            holder.star5.setImageResource(R.mipmap.star_pink);
+        }
+    }
+
     public void addAll(List<Place> newPlaces) {
         places.addAll(newPlaces);
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -69,5 +88,20 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
 
         @BindView(R.id.city_item_type_name)
         public TextView city_item_type_name;
+
+        @BindView(R.id.star1)
+        public ImageView star1;
+
+        @BindView(R.id.star1)
+        public ImageView star2;
+
+        @BindView(R.id.star1)
+        public ImageView star3;
+
+        @BindView(R.id.star1)
+        public ImageView star4;
+
+        @BindView(R.id.star1)
+        public ImageView star5;
     }
 }

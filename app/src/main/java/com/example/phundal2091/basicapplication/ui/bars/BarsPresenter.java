@@ -5,7 +5,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.phundal2091.basicapplication.framework.Presenter;
-import com.example.phundal2091.basicapplication.ui.root.CityGuideAdapter;
-import com.example.phundal2091.basicapplication.wrapper.LocationClient;
 import com.example.services.IApiService;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
@@ -36,7 +33,7 @@ public class BarsPresenter extends Presenter<BarsView, Object> implements IBarsP
     private PlaceDetectionClient mPlaceDetectionClient;
     private static final String TAG = BarsPresenter.class.getSimpleName();
     private IApiService apiService;
-    private CityGuideAdapter cityGuideAdapter;
+    private BarRecyclerAdapter barRecyclerAdapter;
     private RecyclerView recyclerView;
 
     public BarsPresenter(Context context, BarsView view, IApiService apiService) {
@@ -52,12 +49,12 @@ public class BarsPresenter extends Presenter<BarsView, Object> implements IBarsP
     }
 
     private void bindToAdapter(List<Place> places) {
-        if (cityGuideAdapter != null) {
-            cityGuideAdapter.addAll(places);
+        if (barRecyclerAdapter != null) {
+            barRecyclerAdapter.addAll(places);
         } else {
-            cityGuideAdapter = new CityGuideAdapter(places, context);
+            barRecyclerAdapter = new BarRecyclerAdapter(places, context);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(cityGuideAdapter);
+            recyclerView.setAdapter(barRecyclerAdapter);
         }
     }
 
@@ -84,9 +81,9 @@ public class BarsPresenter extends Presenter<BarsView, Object> implements IBarsP
             public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
                 PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
                 for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    Log.i(TAG, String.format("Place '%s' has likelihood: %g",
+                    Log.i(TAG, String.format("Place '%s' has rating: %g",
                             placeLikelihood.getPlace().getName(),
-                            placeLikelihood.getLikelihood()));
+                            placeLikelihood.getPlace().getRating()));
                     if (isPlaceABar(placeLikelihood.getPlace())) {
                         listOfLikelyPlaces.add(placeLikelihood.getPlace());
                     }
