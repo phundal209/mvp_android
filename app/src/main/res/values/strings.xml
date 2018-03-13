@@ -6,4 +6,5 @@
     <string name="bar">Bar</string>
     <string name="bistro">Bistro</string>
     <string name="cafe">Cafe</string>
+    <string name="accept_permissions_message">Please accept permissions</string>
 </resources>

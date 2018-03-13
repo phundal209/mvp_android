@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.phundal2091.basicapplication.NearbyPlaceFinder;
 import com.example.phundal2091.basicapplication.R;
 import com.example.phundal2091.basicapplication.ui.PlaceType;
 import com.example.phundal2091.basicapplication.ui.root.MainActivity;
@@ -43,4 +44,5 @@ public class CityItemFragment extends Fragment {
     public void setType(PlaceType type) {
         this.type = type;
     }
+
 }

@@ -2,13 +2,18 @@ package com.example.phundal2091.basicapplication.ui.bars;
 
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phundal2091.basicapplication.NearbyPlaceFinder;
 import com.example.phundal2091.basicapplication.framework.Presenter;
 import com.example.phundal2091.basicapplication.ui.PlaceType;
 import com.example.phundal2091.basicapplication.ui.root.CityGuideAdapter;
+import com.example.phundal2091.basicapplication.ui.root.MainActivity;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionClient;
@@ -16,6 +21,8 @@ import com.google.android.gms.location.places.Places;
 
 
 import java.util.List;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class CityItemPresenter extends Presenter<CityItemView, Object> implements ICityItemPresenter {
     private GeoDataClient mGeoDataClient;
