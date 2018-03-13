@@ -15,6 +15,7 @@ import com.example.phundal2091.basicapplication.ui.cafes.ICafePresenter;
 import com.example.phundal2091.basicapplication.ui.root.ContentView;
 import com.example.phundal2091.basicapplication.ui.root.ContentViewPresenter;
 import com.example.phundal2091.basicapplication.ui.root.IContentViewPresenter;
+import com.example.services.IApiService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -45,8 +46,8 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    IBarsPresenter provdesBarsPresenter() {
-        return new BarsPresenter(activity, new BarsView());
+    IBarsPresenter provdesBarsPresenter(IApiService apiService) {
+        return new BarsPresenter(activity, new BarsView(), apiService);
     }
 
     @Provides

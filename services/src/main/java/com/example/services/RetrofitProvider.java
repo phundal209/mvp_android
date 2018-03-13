@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitProvider implements IRetrofitProvider {
     //    public static final String url = "http://api.nytimes.com/svc/movies/v2/reviews/dvd-picks.json?order=by-date&api-key=b75da00e12d54774a2d362adddcc9bef/";
-    public static final String url = "http://api.nytimes.com/";
+    public static final String url = "https://maps.googleapis.com/maps/api/geocode/";
 
     @Override
     public Retrofit getRetrofit() {

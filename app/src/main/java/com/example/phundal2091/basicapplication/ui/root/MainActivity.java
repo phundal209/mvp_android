@@ -12,10 +12,13 @@ import com.example.phundal2091.basicapplication.injection.ActivityModule;
 import com.example.phundal2091.basicapplication.injection.DaggerMainActivityComponent;
 import com.example.phundal2091.basicapplication.injection.DataModule;
 import com.example.phundal2091.basicapplication.injection.MainActivityComponent;
+import com.example.phundal2091.basicapplication.prefs.PrefManager;
 import com.example.phundal2091.basicapplication.wrapper.LocationClient;
 import com.google.android.gms.location.places.GeoDataClient;
 
 import javax.inject.Inject;
+
+import static com.example.phundal2091.basicapplication.prefs.PrefManager.LOCATION_KEY;
 
 public class MainActivity extends FragmentActivity {
 
@@ -24,12 +27,14 @@ public class MainActivity extends FragmentActivity {
     IContentViewPresenter contentViewPresenter;
     private LocationClient locationClient;
     private CityGuidePagerAdapter cityGuidePagerAdapter;
+    private PrefManager prefManager;
 
     public MainActivityComponent component() {
         if (component == null) {
             component = DaggerMainActivityComponent.builder()
                     .applicationComponent((getBasicApplication()).getComponent())
                     .activityModule(new ActivityModule(this))
+                    .dataModule(new DataModule(this))
                     .build();
         }
         return component;
@@ -42,6 +47,7 @@ public class MainActivity extends FragmentActivity {
 
         component().inject(this);
         this.locationClient = new LocationClient(this);
+        this.prefManager = new PrefManager();
 
         contentViewPresenter
                 .getView()
@@ -62,7 +68,7 @@ public class MainActivity extends FragmentActivity {
         locationClient.getLastKnownLocation(new LocationClient.IOnLocationRetrieved() {
             @Override
             public void onRetrieved(Location location) {
-                if (cityGuidePagerAdapter != null) cityGuidePagerAdapter.setLocation(location);
+//                if (cityGuidePagerAdapter != null) cityGuidePagerAdapter.setLocation(location);
             }
         });
     }

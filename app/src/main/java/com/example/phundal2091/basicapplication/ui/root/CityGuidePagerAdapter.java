@@ -28,7 +28,6 @@ public class CityGuidePagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 BarFragment barFragment = new BarFragment();
-                barFragment.setLocation(location);
                 return barFragment;
             case 1:
                 BistroFragment bistroFragment = new BistroFragment();
@@ -47,7 +46,4 @@ public class CityGuidePagerAdapter extends FragmentPagerAdapter {
         return PAGE_COUNT;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 }

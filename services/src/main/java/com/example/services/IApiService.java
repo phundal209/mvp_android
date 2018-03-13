@@ -7,5 +7,5 @@ import io.reactivex.Observable;
  */
 
 public interface IApiService {
-    Observable<Object> getSomeData();
+    Observable<Object> getNearbyPlaces(String address, String latlng);
 }

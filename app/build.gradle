@@ -53,6 +53,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:11.8.0'
     implementation 'com.google.android.gms:play-services-location:11.8.0'
 
+    implementation project(':services')
+
     annotationProcessor "com.google.dagger:dagger-compiler:2.14.1"
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.dagger:dagger:2.14.1'

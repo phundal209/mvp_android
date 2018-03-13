@@ -16,8 +16,8 @@ public class ApiService implements IApiService{
 
 
     @Override
-    public Observable<Object> getSomeData() {
-        return restClient.getSomething().map(new Function<Object, Object>() {
+    public Observable<Object> getNearbyPlaces(String address, String latlng) {
+        return restClient.getNearbyPlaces(address, "AIzaSyBqkoq0VRc_4mcdaQ5U0LCgF9q8yNe49w0", latlng).map(new Function<Object, Object>() {
             @Override
             public Object apply(Object o) throws Exception {
                 return null;
