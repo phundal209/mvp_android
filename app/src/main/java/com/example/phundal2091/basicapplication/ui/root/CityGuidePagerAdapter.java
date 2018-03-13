@@ -15,24 +15,26 @@ import com.google.android.gms.location.places.PlaceTypes;
 
 public class CityGuidePagerAdapter extends FragmentPagerAdapter {
     private static int PAGE_COUNT = 3;
+    CityItemFragment barFragment;
+    CityItemFragment bistroFragment;
+    CityItemFragment cafeFragment;
     public CityGuidePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-
         switch (position) {
             case 0:
-                CityItemFragment barFragment = new CityItemFragment();
+                barFragment = new CityItemFragment();
                 barFragment.setType(PlaceType.BAR);
                 return barFragment;
             case 1:
-                CityItemFragment bistroFragment = new CityItemFragment();
+                bistroFragment = new CityItemFragment();
                 bistroFragment.setType(PlaceType.BISTRO);
                 return bistroFragment;
             case 2:
-                CityItemFragment cafeFragment = new CityItemFragment();
+                cafeFragment = new CityItemFragment();
                 cafeFragment.setType(PlaceType.CAFE);
                 return cafeFragment;
             default:

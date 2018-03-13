@@ -94,8 +94,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // It is possible that the permissions request interaction with the user is interrupted.
-        // In this case you will receive empty permissions and results arrays which should be treated as a cancellation.
         if (permissions.length == 0 || grantResults.length == 0) {
             return;
         }
@@ -108,7 +106,7 @@ public class MainActivity extends FragmentActivity {
                 nearbyPlaceFinder.getLikelyPlaces(this, mPlaceDetectionClient, new NearbyPlaceFinder.IOnListOfPlacesRetrieved() {
                     @Override
                     public void showPlaces(List<Place> places) {
-
+                        cityGuidePagerAdapter.barFragment.bindFromPermissions(places);
                     }
                 });
             } else {
