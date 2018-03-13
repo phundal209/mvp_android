@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.phundal2091.basicapplication.ui.bars.BarFragment;
-import com.example.phundal2091.basicapplication.ui.bistros.BistroFragment;
-import com.example.phundal2091.basicapplication.ui.cafes.CafeFragment;
+import com.example.phundal2091.basicapplication.ui.PlaceType;
+import com.example.phundal2091.basicapplication.ui.bars.CityItemFragment;
+import com.google.android.gms.location.places.PlaceTypes;
 
 /**
  * Created by phundal on 3/12/18.
@@ -15,38 +15,34 @@ import com.example.phundal2091.basicapplication.ui.cafes.CafeFragment;
 
 public class CityGuidePagerAdapter extends FragmentPagerAdapter {
     private static int PAGE_COUNT = 3;
-    private Location location;
-
-
     public CityGuidePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    // Returns the fragment to display for that page
     @Override
     public Fragment getItem(int position) {
+
         switch (position) {
             case 0:
-                BarFragment barFragment = new BarFragment();
+                CityItemFragment barFragment = new CityItemFragment();
+                barFragment.setType(PlaceType.BAR);
                 return barFragment;
             case 1:
-                BistroFragment bistroFragment = new BistroFragment();
+                CityItemFragment bistroFragment = new CityItemFragment();
+                bistroFragment.setType(PlaceType.BISTRO);
                 return bistroFragment;
             case 2:
-                CafeFragment cafeFragment = new CafeFragment();
+                CityItemFragment cafeFragment = new CityItemFragment();
+                cafeFragment.setType(PlaceType.CAFE);
                 return cafeFragment;
             default:
                 return null;
         }
     }
 
-
     @Override
     public int getCount() {
         return PAGE_COUNT;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 }

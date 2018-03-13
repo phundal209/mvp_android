@@ -22,6 +22,7 @@ import com.google.android.gms.location.places.GeoDataClient;
 import javax.inject.Inject;
 
 import static com.example.phundal2091.basicapplication.prefs.PrefManager.LOCATION_KEY;
+import static com.example.phundal2091.basicapplication.wrapper.LocationClient.LOCATION_PERMISSION_TAG;
 
 public class MainActivity extends FragmentActivity {
 

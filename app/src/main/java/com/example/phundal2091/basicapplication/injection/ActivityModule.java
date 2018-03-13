@@ -3,19 +3,12 @@ package com.example.phundal2091.basicapplication.injection;
 import android.app.Activity;
 
 import com.example.phundal2091.basicapplication.injection.annotation.PerActivity;
-import com.example.phundal2091.basicapplication.ui.bars.BarsPresenter;
-import com.example.phundal2091.basicapplication.ui.bars.BarsView;
-import com.example.phundal2091.basicapplication.ui.bars.IBarsPresenter;
-import com.example.phundal2091.basicapplication.ui.bistros.BistroPresenter;
-import com.example.phundal2091.basicapplication.ui.bistros.BistroView;
-import com.example.phundal2091.basicapplication.ui.bistros.IBistroPresenter;
-import com.example.phundal2091.basicapplication.ui.cafes.CafePresenter;
-import com.example.phundal2091.basicapplication.ui.cafes.CafeView;
-import com.example.phundal2091.basicapplication.ui.cafes.ICafePresenter;
+import com.example.phundal2091.basicapplication.ui.bars.CityItemPresenter;
+import com.example.phundal2091.basicapplication.ui.bars.CityItemView;
+import com.example.phundal2091.basicapplication.ui.bars.ICityItemPresenter;
 import com.example.phundal2091.basicapplication.ui.root.ContentView;
 import com.example.phundal2091.basicapplication.ui.root.ContentViewPresenter;
 import com.example.phundal2091.basicapplication.ui.root.IContentViewPresenter;
-import com.example.services.IApiService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -46,19 +39,7 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    IBarsPresenter provdesBarsPresenter(IApiService apiService) {
-        return new BarsPresenter(activity, new BarsView(), apiService);
-    }
-
-    @Provides
-    @PerActivity
-    IBistroPresenter provdesBistroPresenter() {
-        return new BistroPresenter(activity, new BistroView());
-    }
-
-    @Provides
-    @PerActivity
-    ICafePresenter provdesCafePresenter() {
-        return new CafePresenter(activity, new CafeView());
+    ICityItemPresenter provdesBarsPresenter() {
+        return new CityItemPresenter(activity, new CityItemView());
     }
 }

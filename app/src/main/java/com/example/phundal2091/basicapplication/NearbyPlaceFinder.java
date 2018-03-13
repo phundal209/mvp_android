@@ -29,7 +29,7 @@ public class NearbyPlaceFinder {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_TAG);
-            getLikelyPlaces(context, mPlaceDetectionClient, onListOfPlacesRetrieved);
+            return;
         }
         Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
         placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
@@ -47,12 +47,36 @@ public class NearbyPlaceFinder {
                 likelyPlaces.release();
             }
         });
-        placeResult.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.i(TAG, "failure due to : " + e.getMessage());
+    }
+
+    private boolean isPlaceACafe(Place place) {
+        final List<Integer> placeTypes = place.getPlaceTypes();
+        for (Integer placeType : placeTypes) {
+            if (placeType == Place.TYPE_CAFE) {
+                return true;
             }
-        });
+        }
+        return false;
+    }
+
+    private boolean isPlaceABar(Place place) {
+        final List<Integer> placeTypes = place.getPlaceTypes();
+        for (Integer placeType : placeTypes) {
+            if (placeType == Place.TYPE_BAR) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isPlaceABistro(Place place) {
+        final List<Integer> placeTypes = place.getPlaceTypes();
+        for (Integer placeType : placeTypes) {
+            if (placeType == Place.TYPE_FOOD) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public interface IOnListOfPlacesRetrieved {

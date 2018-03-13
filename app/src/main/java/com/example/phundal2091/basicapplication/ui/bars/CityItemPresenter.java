@@ -1,4 +1,4 @@
-package com.example.phundal2091.basicapplication.ui.bistros;
+package com.example.phundal2091.basicapplication.ui.bars;
 
 
 import android.content.Context;
@@ -14,18 +14,19 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.Places;
 
+
 import java.util.List;
 
-public class BistroPresenter extends Presenter<BistroView, Object> implements IBistroPresenter {
-
-    private RecyclerView recyclerView;
-    private CityGuideAdapter cityGuideAdapter;
+public class CityItemPresenter extends Presenter<CityItemView, Object> implements ICityItemPresenter {
     private GeoDataClient mGeoDataClient;
     private PlaceDetectionClient mPlaceDetectionClient;
+    private static final String TAG = CityItemPresenter.class.getSimpleName();
+    private CityGuideAdapter cityGuideAdapter;
+    private RecyclerView recyclerView;
     private NearbyPlaceFinder nearbyPlaceFinder;
-    private static final String TAG = BistroPresenter.class.getSimpleName();
+    private PlaceType type;
 
-    public BistroPresenter(Context context, BistroView view) {
+    public CityItemPresenter(Context context, CityItemView view) {
         super(context, view, false);
         this.mGeoDataClient = Places.getGeoDataClient(context, null);
         this.mPlaceDetectionClient = Places.getPlaceDetectionClient(context, null);
@@ -41,23 +42,12 @@ public class BistroPresenter extends Presenter<BistroView, Object> implements IB
             }
         });
     }
-
-    private boolean isPlaceABistro(Place place) {
-        final List<Integer> placeTypes = place.getPlaceTypes();
-        for (Integer placeType : placeTypes) {
-            if (placeType == Place.TYPE_FOOD) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void bindToAdapter(List<Place> places) {
         if (cityGuideAdapter != null) {
             cityGuideAdapter.addAll(places);
         } else {
             cityGuideAdapter = new CityGuideAdapter(places, context);
-            cityGuideAdapter.setTypeOfItem(PlaceType.BISTRO);
+            cityGuideAdapter.setTypeOfItem(type);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(cityGuideAdapter);
         }
@@ -76,5 +66,10 @@ public class BistroPresenter extends Presenter<BistroView, Object> implements IB
     @Override
     public void bindAdapter(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
+    }
+
+    @Override
+    public void setType(PlaceType type) {
+        this.type = type;
     }
 }

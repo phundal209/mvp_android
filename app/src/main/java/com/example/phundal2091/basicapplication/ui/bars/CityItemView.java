@@ -8,6 +8,6 @@ import com.example.phundal2091.basicapplication.framework.ViewScreen;
 
 import butterknife.BindView;
 
-public class BarsView extends ViewScreen {
+public class CityItemView extends ViewScreen {
 
 }
