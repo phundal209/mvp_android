@@ -1,9 +1,12 @@
 package com.example.phundal2091.basicapplication.ui.root;
 
 import android.location.Location;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.phundal2091.basicapplication.BasicApplication;
@@ -25,7 +28,6 @@ public class MainActivity extends FragmentActivity {
     private MainActivityComponent component;
     @Inject
     IContentViewPresenter contentViewPresenter;
-    private CityGuidePagerAdapter cityGuidePagerAdapter;
 
     public MainActivityComponent component() {
         if (component == null) {
@@ -38,11 +40,15 @@ public class MainActivity extends FragmentActivity {
         return component;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.app_name));
+        toolbar.setTitleTextColor(getColor(R.color.white));
         component().inject(this);
         contentViewPresenter
                 .getView()
@@ -52,7 +58,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void bindViewPager() {
-        cityGuidePagerAdapter = new CityGuidePagerAdapter(getSupportFragmentManager());
+        CityGuidePagerAdapter cityGuidePagerAdapter = new CityGuidePagerAdapter(getSupportFragmentManager());
         final ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(cityGuidePagerAdapter);
     }

@@ -24,7 +24,7 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
 
     }
 
-    
+
     @Override
     public void hide() {
         if(progressDialog != null) {
