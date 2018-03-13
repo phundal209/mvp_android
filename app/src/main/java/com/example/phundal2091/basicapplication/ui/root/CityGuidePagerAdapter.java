@@ -1,13 +1,10 @@
 package com.example.phundal2091.basicapplication.ui.root;
 
-import android.location.Location;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.phundal2091.basicapplication.ui.PlaceType;
-import com.example.phundal2091.basicapplication.ui.bars.CityItemFragment;
-import com.google.android.gms.location.places.PlaceTypes;
 
 /**
  * Created by phundal on 3/12/18.

@@ -3,9 +3,6 @@ package com.example.phundal2091.basicapplication.injection;
 import android.app.Activity;
 
 import com.example.phundal2091.basicapplication.injection.annotation.PerActivity;
-import com.example.phundal2091.basicapplication.ui.bars.CityItemPresenter;
-import com.example.phundal2091.basicapplication.ui.bars.CityItemView;
-import com.example.phundal2091.basicapplication.ui.bars.ICityItemPresenter;
 import com.example.phundal2091.basicapplication.ui.root.ContentView;
 import com.example.phundal2091.basicapplication.ui.root.ContentViewPresenter;
 import com.example.phundal2091.basicapplication.ui.root.IContentViewPresenter;
@@ -37,9 +34,4 @@ public class ActivityModule {
         return new ContentViewPresenter(activity, new ContentView());
     }
 
-    @Provides
-    @PerActivity
-    ICityItemPresenter provdesBarsPresenter() {
-        return new CityItemPresenter(activity, new CityItemView());
-    }
 }

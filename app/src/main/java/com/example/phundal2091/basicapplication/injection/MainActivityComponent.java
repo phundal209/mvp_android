@@ -1,7 +1,7 @@
 package com.example.phundal2091.basicapplication.injection;
 
 
-import com.example.phundal2091.basicapplication.ui.bars.CityItemFragment;
+import com.example.phundal2091.basicapplication.ui.root.CityItemFragment;
 import com.example.phundal2091.basicapplication.ui.root.MainActivity;
 import com.example.phundal2091.basicapplication.injection.annotation.PerActivity;
 
@@ -15,5 +15,5 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, DataModule.class})
 public interface MainActivityComponent extends AbstractActivityComponent {
     void inject(MainActivity mainActivity);
-    void inject(CityItemFragment barFragment);
+    void inject(CityItemFragment cityItemFragment);
 }

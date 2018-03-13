@@ -1,4 +1,4 @@
-package com.example.phundal2091.basicapplication.ui.bars;
+package com.example.phundal2091.basicapplication.ui.root;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,10 +23,7 @@ import javax.inject.Inject;
 
 public class CityItemFragment extends Fragment {
 
-    @Inject
-    ICityItemPresenter cityItemPresenter;
     private RecyclerView recyclerView;
-    private CityGuideAdapter cityGuideAdapter;
     PlaceDetectionClient mPlaceDetectionClient;
     private NearbyPlaceFinder nearbyPlaceFinder;
     private PlaceType type;
@@ -40,15 +37,9 @@ public class CityItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View inflate = inflater.inflate(R.layout.fragment_bar, container, false);
-
         this.mPlaceDetectionClient = Places.getPlaceDetectionClient(getActivity(), null);
-        MainActivity activity = (MainActivity) getActivity();
-        activity.component().inject(this);
-        cityItemPresenter.getView().withRootView(inflate);
         recyclerView = inflate.findViewById(R.id.recyclerView);
-        cityItemPresenter.bindAdapter(recyclerView);
-        cityItemPresenter.setType(type);
-        cityItemPresenter.bindControls();
+        getNearbyPlaces();
         return inflate;
     }
 
@@ -56,10 +47,20 @@ public class CityItemFragment extends Fragment {
         this.type = type;
     }
 
+    private void getNearbyPlaces() {
+        nearbyPlaceFinder = new NearbyPlaceFinder();
+        nearbyPlaceFinder.getLikelyPlaces(getContext(), mPlaceDetectionClient, new NearbyPlaceFinder.IOnListOfPlacesRetrieved() {
+            @Override
+            public void showPlaces(List<Place> places) {
+                bindFromPermissions(places);
+            }
+        });
+    }
+
     public void bindFromPermissions(List<Place> places) {
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            cityGuideAdapter = new CityGuideAdapter(places, getContext());
+            CityGuideAdapter cityGuideAdapter = new CityGuideAdapter(places, getContext());
             cityGuideAdapter.setTypeOfItem(type);
             recyclerView.setAdapter(cityGuideAdapter);
         }
@@ -74,12 +75,7 @@ public class CityItemFragment extends Fragment {
             // we check that the fragment is becoming visible
             if (isFragmentVisible_ && !_hasLoadedOnce) {
                 this.nearbyPlaceFinder = new NearbyPlaceFinder();
-                nearbyPlaceFinder.getLikelyPlaces(getContext(), mPlaceDetectionClient, new NearbyPlaceFinder.IOnListOfPlacesRetrieved() {
-                    @Override
-                    public void showPlaces(List<Place> places) {
-                        bindFromPermissions(places);
-                    }
-                });
+                getNearbyPlaces();
                 _hasLoadedOnce = true;
             }
         }
