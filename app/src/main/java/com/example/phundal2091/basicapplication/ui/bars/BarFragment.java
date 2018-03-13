@@ -5,6 +5,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +28,6 @@ public class BarFragment extends Fragment {
     IBarsPresenter barsPresenter;
     protected GeoDataClient mGeoDataClient;
     private Location location;
-    private LocationClient locationClient;
-    private PrefManager prefManager;
-    private LocationHelper locationHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,14 +39,18 @@ public class BarFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View inflate = inflater.inflate(R.layout.fragment_bar, container, false);
 
-        this.prefManager = new PrefManager();
         MainActivity activity = (MainActivity) getActivity();
         activity.component().inject(this);
         barsPresenter.getView().withRootView(inflate);
         mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
+        barsPresenter.setLocation(location);
         barsPresenter.bindControls();
         barsPresenter.setGeoClient(mGeoDataClient);
         return inflate;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
 }

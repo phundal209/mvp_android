@@ -1,32 +1,40 @@
 package com.example.phundal2091.basicapplication.ui.bars;
 
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.example.phundal2091.basicapplication.framework.Presenter;
 import com.example.phundal2091.basicapplication.location_helper.LocationHelper;
 import com.example.phundal2091.basicapplication.wrapper.LocationClient;
 import com.example.services.IApiService;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.places.PlaceLikelihood;
+import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
+import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import static com.example.phundal2091.basicapplication.wrapper.LocationClient.LOCATION_PERMISSION_TAG;
 
 public class BarsPresenter extends Presenter<BarsView, Object> implements IBarsPresenter {
     private GeoDataClient mGeoDataClient;
+    private PlaceDetectionClient mPlaceDetectionClient;
     private Location mLocation;
     private LocationClient locationClient;
-    private LocationHelper locationHelper;
     private static final String TAG = BarsPresenter.class.getSimpleName();
     private IApiService apiService;
 
@@ -34,40 +42,33 @@ public class BarsPresenter extends Presenter<BarsView, Object> implements IBarsP
         super(context, view, false);
         this.apiService = apiService;
         this.locationClient = new LocationClient(context);
-        this.locationHelper = new LocationHelper(context);
+        this.mGeoDataClient = Places.getGeoDataClient(context, null);
+        this.mPlaceDetectionClient = Places.getPlaceDetectionClient(context, null);
     }
 
     @Override
     public void bindControls() {
-        getNearbyLocationResponse();
+        getLikelyPlaces();
     }
+    
 
-    private void getNearbyLocationResponse() {
-        locationClient.getLastKnownLocation(new LocationClient.IOnLocationRetrieved() {
+    private void getLikelyPlaces() {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_TAG);
+            return;
+        }
+        Task<PlaceLikelihoodBufferResponse> placeResult = mPlaceDetectionClient.getCurrentPlace(null);
+        placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
             @Override
-            public void onRetrieved(Location location) {
-                if (location == null) {
-                    String latlng = mLocation.getLatitude() + "," + mLocation.getLongitude();
-                    Log.i(TAG, "latlng = " + latlng);
-                    makeApiForNearbyPlaces(locationHelper.getAddress(mLocation), latlng);
-                } else {
-                    String latlng = location.getLatitude() + "," + location.getLongitude();
-                    Log.i(TAG, "latlng = " + latlng);
-                    makeApiForNearbyPlaces(locationHelper.getAddress(location), latlng);
+            public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
+                PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
+                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                    Log.i(TAG, String.format("Place '%s' has likelihood: %g",
+                            placeLikelihood.getPlace().getName(),
+                            placeLikelihood.getLikelihood()));
                 }
-
-            }
-        });
-    }
-
-    private void makeApiForNearbyPlaces(String address, String latlng) {
-        apiService.getNearbyPlaces(address, latlng)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<Object>() {
-            @Override
-            public void accept(Object o) throws Exception {
-
+                likelyPlaces.release();
             }
         });
     }

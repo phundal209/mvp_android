@@ -68,7 +68,7 @@ public class MainActivity extends FragmentActivity {
         locationClient.getLastKnownLocation(new LocationClient.IOnLocationRetrieved() {
             @Override
             public void onRetrieved(Location location) {
-//                if (cityGuidePagerAdapter != null) cityGuidePagerAdapter.setLocation(location);
+                if (cityGuidePagerAdapter != null) cityGuidePagerAdapter.setLocation(location);
             }
         });
     }
