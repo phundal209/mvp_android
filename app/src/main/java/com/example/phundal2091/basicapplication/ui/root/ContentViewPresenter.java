@@ -14,27 +14,17 @@ import com.google.android.gms.location.places.GeoDataClient;
 public class ContentViewPresenter extends Presenter<ContentView, Object> implements IContentViewPresenter {
     private ProgressDialog progressDialog;
     private static final String TAG = ContentViewPresenter.class.getSimpleName();
-    private LocationClient locationClient;
 
     public ContentViewPresenter(Context context, ContentView view) {
         super(context, view, false);
-        this.locationClient = new LocationClient(context);
     }
 
     @Override
     public void bindControls() {
-        locationClient.getLastKnownLocation(new LocationClient.IOnLocationRetrieved() {
-            @Override
-            public void onRetrieved(Location location) {
-                if (location !=  null) {
-                    Log.i(TAG, "location lat : " + location.getLatitude() + ", location long" + location.getLongitude());
-                }
-            }
-        });
+
     }
 
-
-
+    
     @Override
     public void hide() {
         if(progressDialog != null) {

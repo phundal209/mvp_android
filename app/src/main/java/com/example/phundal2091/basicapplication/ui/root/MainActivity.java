@@ -25,9 +25,7 @@ public class MainActivity extends FragmentActivity {
     private MainActivityComponent component;
     @Inject
     IContentViewPresenter contentViewPresenter;
-    private LocationClient locationClient;
     private CityGuidePagerAdapter cityGuidePagerAdapter;
-    private PrefManager prefManager;
 
     public MainActivityComponent component() {
         if (component == null) {
@@ -46,9 +44,6 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         component().inject(this);
-        this.locationClient = new LocationClient(this);
-        this.prefManager = new PrefManager();
-
         contentViewPresenter
                 .getView()
                 .withRootView(this.findViewById(android.R.id.content).getRootView());
@@ -65,12 +60,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        locationClient.getLastKnownLocation(new LocationClient.IOnLocationRetrieved() {
-            @Override
-            public void onRetrieved(Location location) {
-                if (cityGuidePagerAdapter != null) cityGuidePagerAdapter.setLocation(location);
-            }
-        });
     }
 
 
