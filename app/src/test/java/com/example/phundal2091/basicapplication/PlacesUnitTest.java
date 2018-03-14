@@ -2,6 +2,7 @@ package com.example.phundal2091.basicapplication;
 import android.net.Uri;
 
 import com.example.phundal2091.basicapplication.ui.PlaceType;
+import com.example.phundal2091.basicapplication.wrapper.NearbyPlaceFinder;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;

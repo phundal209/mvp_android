@@ -1,7 +1,6 @@
 package com.example.phundal2091.basicapplication.ui.root;
 
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -9,13 +8,12 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phundal2091.basicapplication.BasicApplication;
-import com.example.phundal2091.basicapplication.NearbyPlaceFinder;
+import com.example.phundal2091.basicapplication.wrapper.NearbyPlaceFinder;
 import com.example.phundal2091.basicapplication.R;
 import com.example.phundal2091.basicapplication.injection.ActivityModule;
 import com.example.phundal2091.basicapplication.injection.DaggerMainActivityComponent;
@@ -30,7 +28,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import static android.widget.Toast.LENGTH_LONG;
-import static com.example.phundal2091.basicapplication.wrapper.LocationClient.LOCATION_PERMISSION_TAG;
+import static com.example.phundal2091.basicapplication.wrapper.NearbyPlaceFinder.LOCATION_PERMISSION_TAG;
 
 public class MainActivity extends FragmentActivity {
 
@@ -40,8 +38,9 @@ public class MainActivity extends FragmentActivity {
     CityGuidePagerAdapter cityGuidePagerAdapter;
     private PlaceDetectionClient mPlaceDetectionClient;
     private FrameLayout barLayout, bistroLayout, cafeLayout;
-
     private TextView barPager, bistroPager, cafePager;
+    private Toolbar toolbar;
+    private ViewPager viewPager;
     public MainActivityComponent component() {
         if (component == null) {
             component = DaggerMainActivityComponent.builder()
@@ -77,21 +76,19 @@ public class MainActivity extends FragmentActivity {
         barLayout = findViewById(R.id.barSelectedLayout);
         bistroLayout = findViewById(R.id.bistroSelectedLayout);
         cafeLayout = findViewById(R.id.cafeSelectedLayout);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         toolbar.setTitleTextColor(getColor(R.color.white));
     }
 
     private void bindViewPager() {
         cityGuidePagerAdapter = new CityGuidePagerAdapter(getSupportFragmentManager());
-        final LockableViewPager viewPager = findViewById(R.id.viewPager);
-        viewPager.setSwipeable(false);
+        viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(cityGuidePagerAdapter);
-        viewPager.setCurrentItem(0);
         contentViewPresenter.changePager(barPager, viewPager, 0, barLayout, bistroLayout, cafeLayout);
         contentViewPresenter.changePager(bistroPager, viewPager, 1, barLayout, bistroLayout, cafeLayout);
         contentViewPresenter.changePager(cafePager, viewPager, 2, barLayout, bistroLayout, cafeLayout);
+        contentViewPresenter.handleOnSwipeGestureOfPager(viewPager, barLayout, bistroLayout, cafeLayout);
     }
 
     @Override

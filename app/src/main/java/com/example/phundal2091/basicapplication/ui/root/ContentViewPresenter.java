@@ -2,20 +2,13 @@ package com.example.phundal2091.basicapplication.ui.root;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.location.Location;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.phundal2091.basicapplication.R;
 import com.example.phundal2091.basicapplication.framework.Presenter;
-import com.example.phundal2091.basicapplication.wrapper.LocationClient;
-import com.google.android.gms.location.places.GeoDataClient;
-
-import static android.widget.Toast.LENGTH_LONG;
 
 
 public class ContentViewPresenter extends Presenter<ContentView, Object> implements IContentViewPresenter {
@@ -36,28 +29,51 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
         pagerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (pos) {
-                    case 0:
-                        barLayout.setVisibility(View.VISIBLE);
-                        bistroLayout.setVisibility(View.INVISIBLE);
-                        cafeLayout.setVisibility(View.INVISIBLE);
-                        break;
-                    case 1:
-                        barLayout.setVisibility(View.INVISIBLE);
-                        bistroLayout.setVisibility(View.VISIBLE);
-                        cafeLayout.setVisibility(View.INVISIBLE);
-                        break;
-                    case 2:
-                        barLayout.setVisibility(View.INVISIBLE);
-                        bistroLayout.setVisibility(View.INVISIBLE);
-                        cafeLayout.setVisibility(View.VISIBLE);
-                        break;
-                }
+                switchToPage(pos, barLayout, bistroLayout, cafeLayout);
                 viewPager.setCurrentItem(pos);
             }
         });
     }
 
+    @Override
+    public void handleOnSwipeGestureOfPager(ViewPager pager, final FrameLayout barLayout, final FrameLayout bistroLayout, final FrameLayout cafeLayout) {
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switchToPage(position, barLayout, bistroLayout, cafeLayout);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void switchToPage(int pos, FrameLayout barLayout, FrameLayout bistroLayout, FrameLayout cafeLayout) {
+        switch (pos) {
+            case 0:
+                barLayout.setVisibility(View.VISIBLE);
+                bistroLayout.setVisibility(View.INVISIBLE);
+                cafeLayout.setVisibility(View.INVISIBLE);
+                break;
+            case 1:
+                barLayout.setVisibility(View.INVISIBLE);
+                bistroLayout.setVisibility(View.VISIBLE);
+                cafeLayout.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                barLayout.setVisibility(View.INVISIBLE);
+                bistroLayout.setVisibility(View.INVISIBLE);
+                cafeLayout.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
 
     @Override
     public void hide() {

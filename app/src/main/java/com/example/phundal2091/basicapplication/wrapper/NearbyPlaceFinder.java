@@ -1,4 +1,4 @@
-package com.example.phundal2091.basicapplication;
+package com.example.phundal2091.basicapplication.wrapper;
 
 import android.Manifest;
 import android.app.Activity;
@@ -13,16 +13,16 @@ import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.phundal2091.basicapplication.wrapper.LocationClient.LOCATION_PERMISSION_TAG;
 
 public class NearbyPlaceFinder {
     private static final String TAG = NearbyPlaceFinder.class.getSimpleName();
+    public static final int LOCATION_PERMISSION_TAG = 1;
+
 
     public void getLikelyPlaces(Context context, PlaceDetectionClient mPlaceDetectionClient, final IOnListOfPlacesRetrieved onListOfPlacesRetrieved) {
         final List<Place> listOfLikelyPlaces = new ArrayList<>();

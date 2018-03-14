@@ -12,4 +12,6 @@ import com.example.phundal2091.basicapplication.framework.IPresenter;
 
 public interface IContentViewPresenter extends IPresenter<ContentView, Object>{
     void changePager(TextView pagerText, ViewPager viewPager, int pos, FrameLayout barLayout, FrameLayout bistroLayout, FrameLayout cafeLayout);
+
+    void handleOnSwipeGestureOfPager(ViewPager pager, FrameLayout barLayout, FrameLayout bistroLayout, FrameLayout cafeLayout);
 }
