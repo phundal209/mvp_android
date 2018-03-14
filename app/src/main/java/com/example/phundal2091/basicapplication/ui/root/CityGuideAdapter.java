@@ -70,6 +70,10 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
         return 0;
     }
 
+    public List<Place> getPlaces() {
+        return this.places;
+    }
+
     public void flipStarsBasedOnRating(ViewHolder holder, double rating) {
         if (rating <= 0) {
             holder.star1.setImageResource(R.mipmap.star_grey);
@@ -98,6 +102,10 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
             holder.star4.setImageResource(R.mipmap.star_pink);
             holder.star5.setImageResource(R.mipmap.star_pink);
         }
+    }
+
+    public PlaceType getPlaceType() {
+        return this.placeType;
     }
 
     public void setTypeOfItem(PlaceType placeType) {
