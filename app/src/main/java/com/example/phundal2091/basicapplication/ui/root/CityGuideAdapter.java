@@ -52,6 +52,11 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
     }
 
     @Override
+    public long getItemId(int position) {
+        return places.get(position).hashCode();
+    }
+
+    @Override
     public int getItemCount() {
         if (places != null &&
                 places.size() > 0) {

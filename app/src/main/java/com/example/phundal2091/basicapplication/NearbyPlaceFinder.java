@@ -49,7 +49,8 @@ public class NearbyPlaceFinder {
         });
     }
 
-    private boolean isPlaceACafe(Place place) {
+    public boolean isPlaceACafe(Place place) {
+        if (place == null) { return false; }
         final List<Integer> placeTypes = place.getPlaceTypes();
         for (Integer placeType : placeTypes) {
             if (placeType == Place.TYPE_CAFE) {
@@ -59,7 +60,8 @@ public class NearbyPlaceFinder {
         return false;
     }
 
-    private boolean isPlaceABar(Place place) {
+    public boolean isPlaceABar(Place place) {
+        if (place == null) { return false; }
         final List<Integer> placeTypes = place.getPlaceTypes();
         for (Integer placeType : placeTypes) {
             if (placeType == Place.TYPE_BAR) {
@@ -69,7 +71,8 @@ public class NearbyPlaceFinder {
         return false;
     }
 
-    private boolean isPlaceABistro(Place place) {
+    public boolean isPlaceABistro(Place place) {
+        if (place == null) { return false; }
         final List<Integer> placeTypes = place.getPlaceTypes();
         for (Integer placeType : placeTypes) {
             if (placeType == Place.TYPE_FOOD) {

@@ -6,6 +6,7 @@ import android.location.Location;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +32,27 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
     }
 
     @Override
-    public void changePager(TextView pagerText, final ViewPager viewPager, final int pos) {
+    public void changePager(TextView pagerText, final ViewPager viewPager, final int pos, final FrameLayout barLayout, final FrameLayout bistroLayout, final FrameLayout cafeLayout) {
         pagerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                switch (pos) {
+                    case 0:
+                        barLayout.setVisibility(View.VISIBLE);
+                        bistroLayout.setVisibility(View.INVISIBLE);
+                        cafeLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        barLayout.setVisibility(View.INVISIBLE);
+                        bistroLayout.setVisibility(View.VISIBLE);
+                        cafeLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        barLayout.setVisibility(View.INVISIBLE);
+                        bistroLayout.setVisibility(View.INVISIBLE);
+                        cafeLayout.setVisibility(View.VISIBLE);
+                        break;
+                }
                 viewPager.setCurrentItem(pos);
             }
         });

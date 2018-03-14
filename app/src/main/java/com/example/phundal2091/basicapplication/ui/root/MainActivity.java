@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +39,9 @@ public class MainActivity extends FragmentActivity {
     IContentViewPresenter contentViewPresenter;
     CityGuidePagerAdapter cityGuidePagerAdapter;
     private PlaceDetectionClient mPlaceDetectionClient;
+    private FrameLayout barLayout, bistroLayout, cafeLayout;
 
     private TextView barPager, bistroPager, cafePager;
-    private ViewPager viewPager;
-
     public MainActivityComponent component() {
         if (component == null) {
             component = DaggerMainActivityComponent.builder()
@@ -58,6 +58,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
 
         setupViews();
         component().inject(this);
@@ -73,8 +74,10 @@ public class MainActivity extends FragmentActivity {
         barPager = findViewById(R.id.bar_pager);
         bistroPager = findViewById(R.id.bistro_pager);
         cafePager = findViewById(R.id.cafe_pager);
-        viewPager = findViewById(R.id.viewPager);
-        this.mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
+        barLayout = findViewById(R.id.barSelectedLayout);
+        bistroLayout = findViewById(R.id.bistroSelectedLayout);
+        cafeLayout = findViewById(R.id.cafeSelectedLayout);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         toolbar.setTitleTextColor(getColor(R.color.white));
@@ -86,9 +89,9 @@ public class MainActivity extends FragmentActivity {
         viewPager.setSwipeable(false);
         viewPager.setAdapter(cityGuidePagerAdapter);
         viewPager.setCurrentItem(0);
-        contentViewPresenter.changePager(barPager, viewPager, 0);
-        contentViewPresenter.changePager(bistroPager, viewPager, 1);
-        contentViewPresenter.changePager(cafePager, viewPager, 2);
+        contentViewPresenter.changePager(barPager, viewPager, 0, barLayout, bistroLayout, cafeLayout);
+        contentViewPresenter.changePager(bistroPager, viewPager, 1, barLayout, bistroLayout, cafeLayout);
+        contentViewPresenter.changePager(cafePager, viewPager, 2, barLayout, bistroLayout, cafeLayout);
     }
 
     @Override

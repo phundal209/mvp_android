@@ -2,6 +2,7 @@ package com.example.phundal2091.basicapplication.ui.root;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,15 +12,11 @@ import android.view.ViewGroup;
 import com.example.phundal2091.basicapplication.NearbyPlaceFinder;
 import com.example.phundal2091.basicapplication.R;
 import com.example.phundal2091.basicapplication.ui.PlaceType;
-import com.example.phundal2091.basicapplication.ui.root.CityGuideAdapter;
-import com.example.phundal2091.basicapplication.ui.root.MainActivity;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.Places;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class CityItemFragment extends Fragment {
 
@@ -27,6 +24,7 @@ public class CityItemFragment extends Fragment {
     PlaceDetectionClient mPlaceDetectionClient;
     private NearbyPlaceFinder nearbyPlaceFinder;
     private PlaceType type;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,9 @@ public class CityItemFragment extends Fragment {
         final View inflate = inflater.inflate(R.layout.fragment_bar, container, false);
         this.mPlaceDetectionClient = Places.getPlaceDetectionClient(getActivity(), null);
         recyclerView = inflate.findViewById(R.id.recyclerView);
+        swipeRefreshLayout = inflate.findViewById(R.id.swipeRefreshLayout);
         getNearbyPlaces();
+        bindSwipeRefresh();
         return inflate;
     }
 
@@ -61,8 +61,21 @@ public class CityItemFragment extends Fragment {
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             CityGuideAdapter cityGuideAdapter = new CityGuideAdapter(places, getContext());
+            cityGuideAdapter.setHasStableIds(true);
             cityGuideAdapter.setTypeOfItem(type);
             recyclerView.setAdapter(cityGuideAdapter);
+        }
+    }
+
+    private void bindSwipeRefresh() {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    getNearbyPlaces();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
         }
     }
 
