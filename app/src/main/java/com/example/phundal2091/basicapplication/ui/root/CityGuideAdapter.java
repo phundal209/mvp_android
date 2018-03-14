@@ -57,6 +57,11 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         if (places != null &&
                 places.size() > 0) {
@@ -67,7 +72,11 @@ public class CityGuideAdapter extends RecyclerView.Adapter<CityGuideAdapter.View
 
     public void flipStarsBasedOnRating(ViewHolder holder, double rating) {
         if (rating <= 0) {
-            // do nothing
+            holder.star1.setImageResource(R.mipmap.star_grey);
+            holder.star2.setImageResource(R.mipmap.star_grey);
+            holder.star3.setImageResource(R.mipmap.star_grey);
+            holder.star4.setImageResource(R.mipmap.star_grey);
+            holder.star5.setImageResource(R.mipmap.star_grey);
         } else if (rating <= 1) {
             holder.star1.setImageResource(R.mipmap.star_pink);
         } else if(rating <= 2) {
