@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.phundal2091.basicapplication.R;
 import com.example.phundal2091.basicapplication.framework.Presenter;
+import com.example.phundal2091.basicapplication.ui.PlaceType;
 
 
 public class ContentViewPresenter extends Presenter<ContentView, Object> implements IContentViewPresenter {
@@ -53,6 +54,23 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
 
             }
         });
+    }
+
+    @Override
+    public PlaceType getPlaceType(ViewPager pager) {
+        if (pager != null) {
+            switch (pager.getCurrentItem()) {
+                case 0:
+                    return PlaceType.BAR;
+                case 1:
+                    return PlaceType.BISTRO;
+                case 2:
+                    return PlaceType.CAFE;
+                default:
+                    return PlaceType.BAR;
+            }
+        }
+        return PlaceType.BAR;
     }
 
     private void switchToPage(int pos, FrameLayout barLayout, FrameLayout bistroLayout, FrameLayout cafeLayout) {

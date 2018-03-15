@@ -49,15 +49,15 @@ public class CityItemFragment extends Fragment {
 
     private void getNearbyPlaces() {
         nearbyPlaceFinder = new NearbyPlaceFinder();
-        nearbyPlaceFinder.getLikelyPlaces(getContext(), mPlaceDetectionClient, new NearbyPlaceFinder.IOnListOfPlacesRetrieved() {
+        nearbyPlaceFinder.getLikelyPlaces(getContext(), type, mPlaceDetectionClient, new NearbyPlaceFinder.IOnListOfPlacesRetrieved() {
             @Override
             public void showPlaces(List<Place> places) {
-                bindFromPermissions(places);
+                showNearbyPlaces(places);
             }
         });
     }
 
-    public void bindFromPermissions(List<Place> places) {
+    public void showNearbyPlaces(List<Place> places) {
         if (recyclerView != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             CityGuideAdapter cityGuideAdapter = new CityGuideAdapter(places, getContext());

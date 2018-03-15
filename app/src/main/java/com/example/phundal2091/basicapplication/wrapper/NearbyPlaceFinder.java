@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.example.phundal2091.basicapplication.ui.PlaceType;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.PlaceLikelihood;
@@ -24,7 +25,7 @@ public class NearbyPlaceFinder {
     public static final int LOCATION_PERMISSION_TAG = 1;
 
 
-    public void getLikelyPlaces(Context context, PlaceDetectionClient mPlaceDetectionClient, final IOnListOfPlacesRetrieved onListOfPlacesRetrieved) {
+    public void getLikelyPlaces(Context context, final PlaceType placeType, PlaceDetectionClient mPlaceDetectionClient, final IOnListOfPlacesRetrieved onListOfPlacesRetrieved) {
         final List<Place> listOfLikelyPlaces = new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context,
@@ -37,16 +38,40 @@ public class NearbyPlaceFinder {
             public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
                 PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
                 for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    Log.i(TAG, String.format("Place '%s' has rating: %g",
-                            placeLikelihood.getPlace().getName(),
-                            placeLikelihood.getPlace().getRating()));
                     Place frozenPlace = placeLikelihood.getPlace().freeze();
-                    listOfLikelyPlaces.add(frozenPlace);
+                    switch (placeType) {
+                        case BAR:
+                            if (isPlaceABar(frozenPlace)) {
+                                logPlace(frozenPlace);
+                                listOfLikelyPlaces.add(frozenPlace);
+                            }
+                            break;
+                        case BISTRO:
+                            if (isPlaceABistro(frozenPlace)) {
+                                logPlace(frozenPlace);
+                                listOfLikelyPlaces.add(frozenPlace);
+                            }
+                            break;
+                        case CAFE:
+                            if (isPlaceACafe(frozenPlace)) {
+                                logPlace(frozenPlace);
+                                listOfLikelyPlaces.add(frozenPlace);
+                            }
+                            break;
+                        default:
+                            listOfLikelyPlaces.add(frozenPlace);
+                    }
                 }
                 onListOfPlacesRetrieved.showPlaces(listOfLikelyPlaces);
                 likelyPlaces.release();
             }
         });
+    }
+
+    private void logPlace(Place place) {
+        Log.i(TAG, String.format("Place '%s' has rating: %g",
+                place.getName(),
+                place.getRating()));
     }
 
     public boolean isPlaceACafe(Place place) {

@@ -103,10 +103,10 @@ public class MainActivity extends FragmentActivity {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 NearbyPlaceFinder nearbyPlaceFinder = new NearbyPlaceFinder();
-                nearbyPlaceFinder.getLikelyPlaces(this, mPlaceDetectionClient, new NearbyPlaceFinder.IOnListOfPlacesRetrieved() {
+                nearbyPlaceFinder.getLikelyPlaces(this, contentViewPresenter.getPlaceType(viewPager),  mPlaceDetectionClient, new NearbyPlaceFinder.IOnListOfPlacesRetrieved() {
                     @Override
                     public void showPlaces(List<Place> places) {
-                        cityGuidePagerAdapter.barFragment.bindFromPermissions(places);
+                        cityGuidePagerAdapter.barFragment.showNearbyPlaces(places);
                     }
                 });
             } else {
