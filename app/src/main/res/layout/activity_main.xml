@@ -12,15 +12,6 @@
     android:background="@color/white"
     tools:context="com.example.phundal2091.basicapplication.ui.MainActivity">
 
-    <ImageView
-        android:layout_width="400dp"
-        android:layout_height="300dp"
-        android:layout_columnSpan="10"
-        android:layout_rowSpan="10"
-        android:id="@+id/motionImage"
-        tools:src="@mipmap/ic_launcher"
-        android:scaleType="centerCrop"/>
-
     <GridLayout
         android:layout_width="400dp"
         android:layout_height="300dp"
@@ -28,7 +19,14 @@
         android:rowCount="10"
         android:id="@+id/gridLayout">
 
-
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_columnSpan="10"
+            android:layout_rowSpan="10"
+            android:id="@+id/motionImage"
+            tools:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"/>
     </GridLayout>
 
     <android.support.v7.widget.RecyclerView
