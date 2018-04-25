@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_marginBottom="8dp"
+    tools:context="com.example.phundal2091.basicapplication.ui.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultsText"
+        android:textSize="18sp"
+        android:textStyle="italic|bold"
+        android:fontFamily="sans-serif"
+        tools:text="Motion detected for 2 hours and 5 minutes on 04/27/2018"/>
+</RelativeLayout>

@@ -24,4 +24,19 @@ public class ApiService implements IApiService{
             }
         });
     }
+
+    /**
+     * Post request takes in the body of the post and returns a results object
+     * @param motionSearchObject
+     * @return
+     */
+    public Observable<Object> motionSearchAsync(Object motionSearchObject) {
+        return restClient.motionSearch(motionSearchObject)
+                .map(new Function<Object, Object>() {
+                    @Override
+                    public Object apply(Object o) throws Exception {
+                        return null;
+                    }
+                });
+    }
 }
