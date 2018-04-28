@@ -58,6 +58,7 @@ dependencies {
     compile 'javax.annotation:jsr250-api:1.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
 }
 repositories {
     mavenCentral()

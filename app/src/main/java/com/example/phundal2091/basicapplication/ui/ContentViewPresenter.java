@@ -2,6 +2,7 @@ package com.example.phundal2091.basicapplication.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Pair;
 import android.view.View;
@@ -13,7 +14,10 @@ import com.example.phundal2091.basicapplication.framework.Presenter;
 import com.example.phundal2091.basicapplication.wrapper.IImageWrapper;
 import com.example.services.IApiService;
 
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -60,6 +64,16 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
                 }
             });
         }
+    }
+
+
+    private JSONObject createObject() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        long now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
+        long hourAgo = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - 3600);
+        jsonObject.put("startTimeSec", hourAgo);
+        jsonObject.put("endTimeSec", now);
+        return jsonObject;
     }
 
     private void bindRecyclerView(List<Object> results) {
