@@ -1,12 +1,13 @@
 package com.example.phundal2091.basicapplication;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by phundal2091 on 4/28/18.
  */
 
-public class QuestionModel {
+public class QuestionModel implements Serializable {
     private String question;
     private List<String> answers;
 

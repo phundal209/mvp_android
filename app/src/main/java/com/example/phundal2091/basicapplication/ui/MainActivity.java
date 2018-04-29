@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.phundal2091.basicapplication.BasicApplication;
 import com.example.phundal2091.basicapplication.BroadcastService;
+import com.example.phundal2091.basicapplication.QuestionModel;
 import com.example.phundal2091.basicapplication.R;
 import com.example.phundal2091.basicapplication.injection.ActivityModule;
 import com.example.phundal2091.basicapplication.injection.DaggerMainActivityComponent;
@@ -52,9 +53,22 @@ public class MainActivity extends AppCompatActivity {
         contentViewPresenter
                 .getView()
                 .withRootView(this.findViewById(android.R.id.content).getRootView());
-        contentViewPresenter.bindControls();
+        if (savedInstanceState != null
+            && savedInstanceState.getSerializable("question") != null) {
+            QuestionModel questionModel = (QuestionModel) savedInstanceState.getSerializable("question");
+            contentViewPresenter.bindSelectedQuestion(questionModel);
+        } else {
+            contentViewPresenter.bindControls();
+        }
         startService(new Intent(this, BroadcastService.class));
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable("question", contentViewPresenter.getSelectedQuestion());
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
 
     private BroadcastReceiver br = new BroadcastReceiver() {
         @Override

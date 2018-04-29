@@ -1,5 +1,6 @@
 package com.example.phundal2091.basicapplication.ui;
 
+import com.example.phundal2091.basicapplication.QuestionModel;
 import com.example.phundal2091.basicapplication.framework.IPresenter;
 
 /**
@@ -7,5 +8,9 @@ import com.example.phundal2091.basicapplication.framework.IPresenter;
  */
 
 public interface IContentViewPresenter extends IPresenter<ContentView, Object>{
+    QuestionModel getSelectedQuestion();
+
     void updateTimer(long secondsLeft);
+
+    void bindSelectedQuestion(QuestionModel questionModel);
 }

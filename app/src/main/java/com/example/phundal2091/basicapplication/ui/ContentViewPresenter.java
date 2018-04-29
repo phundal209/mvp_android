@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.phundal2091.basicapplication.BroadcastService;
 import com.example.phundal2091.basicapplication.IQuestionBank;
+import com.example.phundal2091.basicapplication.PreferencesManager;
 import com.example.phundal2091.basicapplication.QuestionModel;
 import com.example.phundal2091.basicapplication.R;
 import com.example.phundal2091.basicapplication.framework.Presenter;
@@ -36,6 +37,7 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
     private ProgressDialog progressDialog;
     private IQuestionBank questionBank;
     private IImageWrapper imageWrapper;
+    private QuestionModel selectedQuestion;
 
     public ContentViewPresenter(Context context, ContentView view, IApiService apiService,
                                 IQuestionBank questionBank, IImageWrapper iImageWrapper) {
@@ -43,6 +45,11 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
         this.apiService = apiService;
         this.questionBank = questionBank;
         this.imageWrapper = iImageWrapper;
+    }
+
+    @Override
+    public QuestionModel getSelectedQuestion() {
+        return selectedQuestion;
     }
 
     @Override
@@ -79,19 +86,23 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
                 .subscribe(new Consumer<QuestionModel>() {
                     @Override
                     public void accept(QuestionModel questionModel) throws Exception {
-                        view.question.setText(questionModel.getQuestion());
-                        imageWrapper.displayImage(questionModel.getAnswers().get(0), view.image_one);
-                        imageWrapper.displayImage(questionModel.getAnswers().get(1), view.image_two);
-                        imageWrapper.displayImage(questionModel.getAnswers().get(2), view.image_three);
-                        imageWrapper.displayImage(questionModel.getAnswers().get(3), view.image_four);
-                        handleQuizAnswerSelection(view.image_one, 0, questionModel);
-                        handleQuizAnswerSelection(view.image_two, 1, questionModel);
-                        handleQuizAnswerSelection(view.image_three, 2, questionModel);
-                        handleQuizAnswerSelection(view.image_four, 3, questionModel);
+                        selectedQuestion = questionModel;
+                        bindQuestionViews(questionModel);
                     }
                 });
     }
 
+    private void bindQuestionViews(QuestionModel questionModel) {
+        view.question.setText(questionModel.getQuestion());
+        imageWrapper.displayImage(questionModel.getAnswers().get(0), view.image_one);
+        imageWrapper.displayImage(questionModel.getAnswers().get(1), view.image_two);
+        imageWrapper.displayImage(questionModel.getAnswers().get(2), view.image_three);
+        imageWrapper.displayImage(questionModel.getAnswers().get(3), view.image_four);
+        handleQuizAnswerSelection(view.image_one, 0, questionModel);
+        handleQuizAnswerSelection(view.image_two, 1, questionModel);
+        handleQuizAnswerSelection(view.image_three, 2, questionModel);
+        handleQuizAnswerSelection(view.image_four, 3, questionModel);
+    }
 
     private void handleQuizAnswerSelection(View image, final int pos, final QuestionModel questionModel) {
         image.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +116,7 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
                     Toast.makeText(context, context.getString(R.string.incorrect), Toast.LENGTH_LONG).show();
                     stopService();
                     bindRetakeQuiz();
+                    view.time_count.setText(context.getString(R.string.times_up));
                 }
             }
         });
@@ -160,5 +172,11 @@ public class ContentViewPresenter extends Presenter<ContentView, Object> impleme
             bindRetakeQuiz();
             view.time_count.setText(context.getString(R.string.times_up));
         }
+    }
+
+    @Override
+    public void bindSelectedQuestion(QuestionModel questionModel) {
+        view.questionsLayout.setVisibility(View.VISIBLE);
+        bindQuestionViews(questionModel);
     }
 }
