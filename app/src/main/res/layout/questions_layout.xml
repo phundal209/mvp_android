@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/questionsLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="100dp"
+    tools:context="com.example.phundal2091.basicapplication.ui.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/question"
+        tools:text="365 Organic Frosted Flakes Cereal"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_one"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="16dp"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_two"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/image_one"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_three"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/image_two"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:id="@+id/image_four"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/image_three"
+            tools:src="@mipmap/ic_launcher"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

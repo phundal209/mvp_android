@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">BasicApplication</string>
     <string name="waiting_message">Fetching data...</string>
+    <string name="time_left">Time left:</string>
+    <string name="no_more_time">TIMES UP!</string>
+    <string name="retake">Retake quiz</string>
+    <string name="correct">CORRECT!</string>
+    <string name="incorrect">INCORRECT!</string>
+    <string name="times_up">Times up!</string>
 </resources>

@@ -1,9 +1,21 @@
 package com.example.phundal2091.basicapplication.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phundal2091.basicapplication.BasicApplication;
+import com.example.phundal2091.basicapplication.BroadcastService;
 import com.example.phundal2091.basicapplication.R;
 import com.example.phundal2091.basicapplication.injection.ActivityModule;
 import com.example.phundal2091.basicapplication.injection.DaggerMainActivityComponent;
@@ -17,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private MainActivityComponent component;
     @Inject
     IContentViewPresenter contentViewPresenter;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     MainActivityComponent component() {
         if (component == null) {
@@ -40,9 +53,41 @@ public class MainActivity extends AppCompatActivity {
                 .getView()
                 .withRootView(this.findViewById(android.R.id.content).getRootView());
         contentViewPresenter.bindControls();
+        startService(new Intent(this, BroadcastService.class));
+    }
+
+    private BroadcastReceiver br = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateGUI(intent);
+        }
+    };
+
+    private void updateGUI(Intent intent) {
+        if (intent != null
+                && intent.hasExtra("countdown")) {
+            long timeLeft = intent.getLongExtra("countdown", 0);
+            long secondsLeft = timeLeft/1000;
+            contentViewPresenter.updateTimer(secondsLeft);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver(br, new IntentFilter(BroadcastService.COUNTDOWN_BR));
+        Log.i(TAG, "Registered broacast receiver");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(br);
+        Log.i(TAG, "Unregistered broacast receiver");
     }
 
     private BasicApplication getBasicApplication() {
         return (BasicApplication) getApplication();
     }
+
 }

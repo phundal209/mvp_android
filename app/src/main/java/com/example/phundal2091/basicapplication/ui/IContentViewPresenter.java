@@ -7,4 +7,5 @@ import com.example.phundal2091.basicapplication.framework.IPresenter;
  */
 
 public interface IContentViewPresenter extends IPresenter<ContentView, Object>{
+    void updateTimer(long secondsLeft);
 }

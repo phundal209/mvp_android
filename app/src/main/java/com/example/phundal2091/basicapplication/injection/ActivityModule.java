@@ -2,14 +2,19 @@ package com.example.phundal2091.basicapplication.injection;
 
 import android.app.Activity;
 
+import com.example.phundal2091.basicapplication.IQuestionBank;
+import com.example.phundal2091.basicapplication.QuestionBank;
 import com.example.phundal2091.basicapplication.injection.annotation.PerActivity;
 import com.example.phundal2091.basicapplication.ui.ContentView;
 import com.example.phundal2091.basicapplication.ui.ContentViewPresenter;
 import com.example.phundal2091.basicapplication.ui.IContentViewPresenter;
+import com.example.phundal2091.basicapplication.wrapper.IImageWrapper;
+import com.example.phundal2091.basicapplication.wrapper.ImageWrapper;
 import com.example.services.IApiService;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by phundal on 12/1/17.
@@ -34,8 +39,20 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    IContentViewPresenter loginPresenter(IApiService apiService) {
+    IQuestionBank providesQuestionBank() {
+        return new QuestionBank(activity);
+    }
+
+    @Provides
+    @PerActivity
+    IImageWrapper providesImageWrapper() {
+        return new ImageWrapper(activity);
+    }
+
+    @Provides
+    @PerActivity
+    IContentViewPresenter loginPresenter(IApiService apiService, IQuestionBank questionBank, IImageWrapper iImageWrapper) {
         return new ContentViewPresenter(activity, new ContentView(activity
-                .findViewById(android.R.id.content)), apiService);
+                .findViewById(android.R.id.content)), apiService, questionBank, iImageWrapper);
     }
 }

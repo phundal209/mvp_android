@@ -17,6 +17,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".BroadcastService"/>
         <activity android:name=".ui.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -8,4 +8,5 @@ import io.reactivex.Observable;
 
 public interface IApiService {
     Observable<Object> getSomeData();
+    Observable<Object> getQuestionMap();
 }

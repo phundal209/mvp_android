@@ -2,13 +2,20 @@ package com.example.phundal2091.basicapplication;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.widget.Toast;
 
 import com.example.phundal2091.basicapplication.injection.AppModule;
 import com.example.phundal2091.basicapplication.injection.ApplicationComponent;
 import com.example.phundal2091.basicapplication.injection.DaggerApplicationComponent;
 import com.example.services.IRetrofitProvider;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 

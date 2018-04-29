@@ -24,4 +24,10 @@ public class ApiService implements IApiService{
             }
         });
     }
+
+    @Override
+    public Observable<Object> getQuestionMap() {
+        return null;
+    }
+
 }
